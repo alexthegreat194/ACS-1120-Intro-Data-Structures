@@ -65,8 +65,7 @@ class Listogram(list):
         """Return a word from this histogram, randomly sampled by weighting
         each word's probability of being chosen by its observed frequency."""
         # TODO: Randomly choose a word based on its frequency in this histogram
-        random.shuffle(self)
-        dart = random.randint(0, self.tokens)
+        dart = random.uniform(0, self.tokens)
         index = 0
         for word, count in self:
             index += count
