@@ -50,7 +50,7 @@ def build_sentence(hist, markov, length=10):
 if __name__ == '__main__':
     settings = handle_args()
     source = settings.get('source_text')
-    print(source)
+    # print(source)
     hist = Dictogram(source)
     # print(hist)
     mark = Markov(source)
