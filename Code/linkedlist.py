@@ -100,10 +100,19 @@ class LinkedList:
         # TODO: Loop through all nodes to find item, if present return True otherwise False
         current = self.head
         while current is not None:
-            if current.data is item:
+            if current.data == item:
                 return True
             current = current.next
         return False
+
+    def _previous(self, node):
+        '''Returns the previous node given a node'''
+        current = self.head
+        while current is not None:
+            if current.next is node:
+                return current
+            current = current.next
+        raise ValueError(f'Node {node} not exist')
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
@@ -113,26 +122,44 @@ class LinkedList:
         # TODO: Update previous node to skip around node with matching data
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
+        
+        if not self.find(item) or self.is_empty():
+            raise ValueError('Item not found: {}'.format(item))
+        
+        if self.head.data == item and self.tail.data == item:
+            self.head = None
+            self.tail = None
+            return
+        
+        if self.head.data == item:
+            self.head = self.head.next
+            return
+        
+        if self.tail.data == item:
+            self.tail = self._previous(self.tail)
+            self.tail.next = None
+            print(self.tail)
+            return
+        
         current = self.head
-        previous = None
         while current is not None:
-            if current.data is item:
-                if previous:
-                    if current is self.tail:
-                        self.tail = previous
-                    previous.next = current.next
-                    print('delete(exist): ', previous, current)
-                else:
-                    self.head = current.next
-                    if self.head is None:
-                        self.tail = None
-                    print('delete: ', previous, current)
+            if current.data == item:
+                self._previous(current).next = current.next
                 return
-            
-            previous = current
             current = current.next
-        raise ValueError(f'Item not found: {item}')
+        
+        raise Exception('Something aint right')
+
+    def find_if_matches(self, matching_function):
+        """Return an item from this linked list if it is present."""
+        node = self.head
+        while node is not None:
+            if matching_function(node.data): 
+                return node.data
+            node = node.next
+        return None 
 
 if __name__ == "__main__":
     ll = LinkedList(['A', 'B', 'C'])
+    ll.delete('B')
     print(ll)

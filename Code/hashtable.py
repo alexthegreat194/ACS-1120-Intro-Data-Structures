@@ -1,5 +1,6 @@
 #!python
 
+from re import T
 from linkedlist import LinkedList
 
 
@@ -73,6 +74,11 @@ class HashTable(object):
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Find bucket where given key belongs
         # TODO: Check if key-value entry exists in bucket
+        index = hash(key) % len(self.buckets)
+        for k,v in self.buckets[index].items():
+            if k is key:
+                return True
+        return False
 
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
@@ -82,6 +88,13 @@ class HashTable(object):
         # TODO: If found, return value associated with given key
         # TODO: Otherwise, raise error to tell user get failed
         # Hint: raise KeyError('Key not found: {}'.format(key))
+        index = hash(key) % len(self.buckets)
+        found_bucket = self.buckets[index]
+        for k,v in found_bucket.items(): # key and value
+            if k is key:
+                return v
+        raise KeyError('Key not found: {}'.format(key))
+        
 
     def set(self, key, value):
         """Insert or update the given key with its associated value.
@@ -90,6 +103,13 @@ class HashTable(object):
         # TODO: Check if key-value entry exists in bucket
         # TODO: If found, update value associated with given key
         # TODO: Otherwise, insert given key-value entry into bucket
+        index = hash(key) % len(self.buckets)
+        found_bucket = self.buckets[index]
+        for k,v in found_bucket.items():
+            if k is key:
+                found_bucket.delete((k, v))
+        found_bucket.append((key, value))
+                
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
@@ -99,7 +119,21 @@ class HashTable(object):
         # TODO: If found, delete entry associated with given key
         # TODO: Otherwise, raise error to tell user delete failed
         # Hint: raise KeyError('Key not found: {}'.format(key))
+        
+        index = self._bucket_index(key)
+        found_bucket = self.buckets[index]
+        for tup in found_bucket.items():
+            if tup[0] == key:
+                found_bucket.delete(tup)
+                print(found_bucket)
+                return
+        
+        raise KeyError('Key not found: {}'.format(key))
+        
 
 if __name__ == '__main__':
     ht = HashTable()
+    ht.set('thing','thidasdsa')
+    ht.set('thing2','dasdasd')
+    ht.delete('thing')
     print('hash table: {}'.format(ht))
