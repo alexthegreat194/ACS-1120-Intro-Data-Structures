@@ -1,1 +1,1 @@
-web: gunicorn app:Code/app
+web: sh -c 'cd Code' && gunicorn app:app
