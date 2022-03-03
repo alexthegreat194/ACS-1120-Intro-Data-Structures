@@ -138,7 +138,6 @@ class LinkedList:
         if self.tail.data == item:
             self.tail = self._previous(self.tail)
             self.tail.next = None
-            print(self.tail)
             return
         
         current = self.head
