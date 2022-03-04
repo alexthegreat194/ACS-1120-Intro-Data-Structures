@@ -5,14 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-
-    <blockquote>{{ sentence }}</blockquote>
-    <form action="/tweet" method="post">
-        <input type="hidden" name="sentence" value="{{ sentence }}">
-        <button type="submit">Tweet this</button>
-    </form>
+<body class="">
+    
+    <div class="h-screen flex flex-col items-center content-evenly gap-10 m-10">
+        <div class="flex flex-col items-center">
+            <h1 class="text-7xl font-light">Dumbledore Tweet Bot</h1>
+            <a href="/" class="text-white bg-sky-600 rounded-full px-3 py-2"><button>Generate</button></a>
+        </div>
+        <div class="bg-stone-300 rounded-xl mx-16 p-5 shadow">
+            <h3 class="text-2xl">{{ sentence }}</h1>
+            <br>
+            <form action="/tweet" method="post">
+                <input type="hidden" name="sentence" value="{{ sentence }}">
+                <button type="submit" class="text-white bg-sky-600 rounded-full px-3 py-2">Tweet this!</button>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>
