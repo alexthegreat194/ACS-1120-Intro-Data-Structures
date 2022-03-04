@@ -109,7 +109,7 @@ class HashTable(object):
             if k is key:
                 found_bucket.delete((k, v))
         found_bucket.append((key, value))
-                
+
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.

@@ -7,6 +7,12 @@
     <title>Bot</title>
 </head>
 <body>
-    <h1>{{ message }}</h1>
+
+    <blockquote>{{ sentence }}</blockquote>
+    <form action="/tweet" method="post">
+        <input type="hidden" name="sentence" value="{{ sentence }}">
+        <button type="submit">Tweet this</button>
+    </form>
+
 </body>
 </html>

@@ -1,8 +1,9 @@
 """Main script, uses other modules to generate sentences."""
 from glob import glob
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, redirect, request
 from make_tokens import get_tokens
 from markav_chain import Markov, Markov2
+import twitter
 
 app = Flask(__name__)
 
@@ -18,13 +19,17 @@ def before_first_request():
 
 @app.route('/tweet', methods=['POST'])
 def tweet():
-    return 'no'
+    sentence = request.form['sentence']
+    print(sentence)
+    status = twitter.tweet(sentence)
+    print(status)
+    return redirect('/')
 
 @app.route("/")
 def home():
     """Route that returns a web page containing the generated text."""
     global mark
-    return render_template('index.html', message=mark.walk())
+    return render_template('index.html', sentence=mark.walk())
 
 
 if __name__ == "__main__":
